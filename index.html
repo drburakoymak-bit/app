@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Fitness Uygulaması</title>
+    
+    <!-- PWA (Progressive Web App) için eklenen ayarlar -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#f5f5f4">
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Fitness%20Program%C4%B1%22%2C%22short_name%22%3A%22Fitness%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f5f4%22%2C%22theme_color%22%3A%22%23991b1b%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fplacehold.co%2F192x192%2F991b1b%2Fffffff%3Ftext%3DF%22%2C%22type%22%3A%22image%2Fpng%22%2C%22sizes%22%3A%22192x192%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fplacehold.co%2F512x512%2F991b1b%2Fffffff%3Ftext%3DF%22%2C%22type%22%3A%22image%2Fpng%22%2C%22sizes%22%3A%22512x512%22%7D%5D%7D">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Mobil uygulama ikonları için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        .main-content {
+            padding-bottom: 120px; /* Alt boşluk artırıldı */
+        }
+        .nav-button {
+            transition: all 0.2s ease;
+        }
+        .nav-button.active {
+            color: #991b1b; /* red-800 */
+            transform: scale(1.1);
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .weight-input {
+            width: 100%;
+            border-radius: 0.375rem;
+            background-color: #f5f5f4; /* stone-100 */
+            border: 1px solid #d6d3d1; /* stone-300 */
+            color: #292524;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            padding: 0.5rem 0.75rem;
+        }
+        .weight-input:focus {
+            outline: none;
+            border-color: #ef4444; /* red-500 */
+            box-shadow: 0 0 0 2px #fecaca; /* red-200 */
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto max-w-lg">
+        <!-- Üst Başlık -->
+        <header class="p-4 sticky top-0 bg-stone-100 bg-opacity-80 backdrop-blur-sm z-10">
+            <h1 id="page-title" class="text-xl font-bold text-center text-red-800">1. Gün: İtme (Kuvvet)</h1>
+        </header>
+
+        <!-- Ana İçerik Alanı -->
+        <main class="main-content p-4">
+            <div id="plan-content">
+                <!-- Egzersiz içeriği buraya gelecek -->
+            </div>
+        </main>
+
+        <!-- Alt Navigasyon Menüsü -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 py-3 flex justify-around max-w-lg mx-auto z-20">
+            <button class="nav-button active flex flex-col items-center text-stone-500 w-1/6" data-content="day1">
+                <i class="fas fa-dumbbell fa-xl"></i><span class="text-sm mt-2">1. Gün</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day2">
+                <i class="fas fa-user-ninja fa-xl"></i><span class="text-sm mt-2">2. Gün</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day3">
+                <i class="fas fa-walking fa-xl"></i><span class="text-sm mt-2">3. Gün</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day4">
+                <i class="fas fa-dumbbell fa-xl"></i><span class="text-sm mt-2">4. Gün</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day5">
+                 <i class="fas fa-user-ninja fa-xl"></i><span class="text-sm mt-2">5. Gün</span>
+            </button>
+            <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day6">
+                 <i class="fas fa-walking fa-xl"></i><span class="text-sm mt-2">6. Gün</span>
+            </button>
+             <button class="nav-button flex flex-col items-center text-stone-500 w-1/6" data-content="day7">
+                 <i class="fas fa-heartbeat fa-xl"></i><span class="text-sm mt-2">7. Gün</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const workoutTitles = {
+                day1: "Gün 1: İtme (Kuvvet)",
+                day2: "Gün 2: Çekme (Hipertrofi)", // Değiştirildi
+                day3: "Gün 3: Bacak (Kuvvet)",
+                day4: "Gün 4: İtme (Hipertrofi)",
+                day5: "Gün 5: Çekme (Kuvvet)", // Değiştirildi
+                day6: "Gün 6: Bacak (Hipertrofi)",
+                day7: "Gün 7: Aktif Toparlanma"
+            };
+            const workoutData = {
+                day1: `
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">İtme (Kuvvet Odaklı)</h4>
+                        <div class="space-y-3">
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Cable External Rotation</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x10-15</span><input type="text" id="input-day1-0" class="weight-input w-24 text-right" placeholder="5kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Barbell Bench Press</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">4x4-6</span><input type="text" id="input-day1-1" class="weight-input w-24 text-right" placeholder="80kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Overhead Press</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x5-8</span><input type="text" id="input-day1-2" class="weight-input w-24 text-right" placeholder="50kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Dumbbell Lateral Raise</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12</span><input type="text" id="input-day1-4" class="weight-input w-24 text-right" placeholder="10kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Overhead Triceps Extension</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12</span><input type="text" id="input-day1-3" class="weight-input w-24 text-right" placeholder="20kg"></div></div>
+                        </div>
+                    </div>`,
+                day2: ` 
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">Çekme (Hipertrofi Odaklı)</h4>
+                        <div class="space-y-3">
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Band Pull-Aparts</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x15-20</span><span class="text-stone-600">Bant</span></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">One-Arm Dumbbell Row</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12</span><input type="text" id="input-day2-0" class="weight-input w-24 text-right" placeholder="35kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Lat Pulldown (Nötr Tutuş)</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x10-15</span><input type="text" id="input-day2-1" class="weight-input w-24 text-right" placeholder="55kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Straight Arm Pulldown</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x12-15</span><input type="text" id="input-day2-2" class="weight-input w-24 text-right" placeholder="25kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Preacher Curl</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x10-15</span><input type="text" id="input-day2-3" class="weight-input w-24 text-right" placeholder="12kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Face Pulls</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x15-20</span><input type="text" id="input-day2-4" class="weight-input w-24 text-right" placeholder="15kg"></div></div>
+                        </div>
+                    </div>`, // 5. GÜN İÇERİĞİ DÜZELTİLDİ
+                 day3: `
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">Bacak (Kuvvet Odaklı)</h4>
+                        <div class="space-y-3">
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Goblet Squat (Light)</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x10-12</span><input type="text" id="input-day3-0" class="weight-input w-24 text-right" placeholder="12kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Sumo Deadlift</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x4-6</span><input type="text" id="input-day3-1" class="weight-input w-24 text-right" placeholder="120kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Bulgarian Split Squat</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12 (her bacak)</span><input type="text" id="input-day3-2" class="weight-input w-24 text-right" placeholder="15kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Lying/Seated Leg Curl</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x12-15</span><input type="text" id="input-day3-3" class="weight-input w-24 text-right" placeholder="40kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Standing Calf Raise</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">4x15-20</span><input type="text" id="input-day3-4" class="weight-input w-24 text-right" placeholder="60kg"></div></div>
+                        </div>
+                    </div>`,
+                day4: `
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">İtme (Hipertrofi Odaklı)</h4>
+                        <div class="space-y-3">
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Cable External Rotation</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x10-15</span><input type="text" id="input-day4-0" class="weight-input w-24 text-right" placeholder="5kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Machine Pec Fly</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12</span><input type="text" id="input-day4-3" class="weight-input w-24 text-right" placeholder="45kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Incline Dumbbell Press</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x8-12</span><input type="text" id="input-day4-1" class="weight-input w-24 text-right" placeholder="30kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Seated DB Shoulder Press</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x10-15</span><input type="text" id="input-day4-2" class="weight-input w-24 text-right" placeholder="20kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Dumbbell Lateral Raise</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x15-20</span><input type="text" id="input-day4-5" class="weight-input w-24 text-right" placeholder="8kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Overhead Triceps Extension</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x12-15</span><input type="text" id="input-day4-4" class="weight-input w-24 text-right" placeholder="20kg"></div></div>
+                        </div>
+                    </div>`,
+                day5: `
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">Çekme (Kuvvet Odaklı)</h4>
+                        <div class="space-y-3">
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Band Pull-Aparts</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x15-20</span><span class="text-stone-600">Bant</span></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Barbell Row</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x4-6</span><input type="text" id="input-day5-0" class="weight-input w-24 text-right" placeholder="70kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Pull-ups / Lat Pulldown</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x6-10</span><input type="text" id="input-day5-1" class="weight-input w-24 text-right" placeholder="Vücut/50kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Chest Supported Y-Raise</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x10-15</span><input type="text" id="input-day5-2" class="weight-input w-24 text-right" placeholder="5kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Face Pulls</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x10-15</span><input type="text" id="input-day5-3" class="weight-input w-24 text-right" placeholder="15kg"></div></div>
+                            <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Barbell Curl</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x6-10</span><input type="text" id="input-day5-4" class="weight-input w-24 text-right" placeholder="30kg"></div></div>
+                        </div>
+                    </div>`, // 2. GÜN İÇERİĞİ DÜZELTİLDİ
+                day6: `
+                    <div class="card space-y-4">
+                        <h4 class="text-lg font-bold text-red-800">Bacak (Hipertrofi Odaklı)</h4>
+                        <div class="space-y-3">
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Warm-up: Goblet Squat (Light)</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">2x10-12</span><input type="text" id="input-day6-0" class="weight-input w-24 text-right" placeholder="12kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Leg Press</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x12-15</span><input type="text" id="input-day6-1" class="weight-input w-24 text-right" placeholder="160kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Dumbbell Romanian Deadlift</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x12-15</span><input type="text" id="input-day6-2" class="weight-input w-24 text-right" placeholder="25kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Leg Extension</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x15-20</span><input type="text" id="input-day6-3" class="weight-input w-24 text-right" placeholder="50kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Seated Leg Curl</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3x15-20</span><input type="text" id="input-day6-4" class="weight-input w-24 text-right" placeholder="45kg"></div></div>
+                           <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Seated Calf Raise</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">4x15-20</span><input type="text" id="input-day6-5" class="weight-input w-24 text-right" placeholder="40kg"></div></div>
+                        </div>
+                    </div>`,
+                day7: `
+                    <div class="card space-y-6">
+                        <h4 class="text-lg font-bold text-red-800">Aktif Toparlanma, Kardiyo & Karın</h4>
+                        
+                        <div class="space-y-4">
+                            <h5 class="font-semibold text-md text-red-700">Bölüm 1: Kardiyo Seçenekleri</h5>
+                            <div class="space-y-4 text-sm text-stone-600 p-3 bg-stone-50 rounded-lg">
+                                <div>
+                                    <h6 class="font-semibold text-stone-700">Seçenek A: Standart Aktif Toparlanma</h6>
+                                    <p class="mt-1"><strong>Protokol:</strong> 40 dakika boyunca sabit tempolu, hafif yoğunlukta kardiyo.<br>
+                                    <strong>Amaç:</strong> Kan dolaşımını artırarak kasların onarımına yardımcı olmak. Yorucu olmamalıdır.</p>
+                                </div>
+                                <div class="border-t border-stone-200 my-2"></div>
+                                <div>
+                                    <h6 class="font-semibold text-stone-700">Seçenek B: Yüksek Yoğunluklu İnterval (Norveç 4x4 Metodu)</h6>
+                                    <p class="mt-1">
+                                        <strong>Protokol (Toplam ~40 dk):</strong><br>
+                                        <strong>1. Isınma (10 dk):</strong> Hafif tempoda başlayıp kalp atışını yavaşça yükseltin.<br>
+                                        <strong>2. İntervaller (25 dk):</strong>
+                                        <ul class="list-disc list-inside ml-4 my-1">
+                                            <li><strong>4 dk Yüksek Tempo</strong> (Maks. kalp hızının ~%90-95'i).</li>
+                                            <li><strong>3 dk Aktif Dinlenme</strong> (Maks. kalp hızının ~%70'i).</li>
+                                            <li>Bu döngüyü <strong>4 kez</strong> tekrarlayın.</li>
+                                        </ul>
+                                        <strong>3. Soğuma (5 dk):</strong> Temponuzu yavaşça düşürerek bitirin.<br>
+                                    </p>
+                                    <p class="text-xs text-red-600 font-semibold mt-2">Uyarı: Bu çok zorlu bir antrenmandır. Yorgunsanız Seçenek A'yı tercih edin.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5 class="font-semibold text-md text-red-700">Bölüm 2: Karın</h5>
+                            <div class="space-y-3 mt-2">
+                                 <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Hanging Leg Raises</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3 x Tükeniş</span><input type="text" id="input-day7-0" class="weight-input w-24 text-right" placeholder="Vücut A."></div></div>
+                                 <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Cable Wood Chops</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3 x 10-15 (her yön)</span><input type="text" id="input-day7-1" class="weight-input w-24 text-right" placeholder="15kg"></div></div>
+                                 <div class="bg-stone-50 p-3 rounded-lg"><p class="font-medium">Plank</p><div class="flex justify-between items-center mt-2"><span class="text-sm text-stone-600">3 x 60sn</span><input type="text" id="input-day7-2" class="weight-input w-24 text-right" placeholder="+10kg"></div></div>
+                            </div>
+                        </div>
+                    </div>`
+            };
+            
+            const planContent = document.getElementById('plan-content');
+            const pageTitle = document.getElementById('page-title');
+            const navButtons = document.querySelectorAll('.nav-button');
+
+            function saveData(id, value) {
+                localStorage.setItem(id, value);
+            }
+
+            function loadDataAndAttachListeners() {
+                const inputs = planContent.querySelectorAll('.weight-input');
+                inputs.forEach(input => {
+                    const savedValue = localStorage.getItem(input.id);
+                    if (savedValue !== null) {
+                        input.value = savedValue;
+                    }
+                });
+            }
+            
+            planContent.addEventListener('input', (event) => {
+                if (event.target.classList.contains('weight-input')) {
+                    saveData(event.target.id, event.target.value);
+                }
+            });
+
+            function changeDay(day) {
+                planContent.innerHTML = workoutData[day];
+                pageTitle.textContent = workoutTitles[day];
+                loadDataAndAttachListeners();
+
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.dataset.content === day) {
+                        btn.classList.add('active');
+                    }
+                });
+                window.scrollTo(0, 0); 
+            }
+
+            changeDay('day1');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    changeDay(button.dataset.content);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
